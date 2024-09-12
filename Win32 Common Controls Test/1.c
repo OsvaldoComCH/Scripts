@@ -33,10 +33,26 @@ LRESULT CALLBACK CustomBtn(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         break;
         case WM_LBUTTONDOWN:
         {
-            printf("WM_LBUTTONDOWN\n");
+            TRACKMOUSEEVENT tme;
+            tme.cbSize = sizeof(TRACKMOUSEEVENT);
+            tme.dwFlags = TME_LEAVE;
+            tme.hwndTrack = hwnd;
+            TrackMouseEvent(&tme);
+
             HDC hdc = GetDC(hwnd);
             SelectObject(hdc, GetStockObject(DC_BRUSH));
-            SetDCBrushColor(hdc, RGB(0,255,0));
+            if(SendMessage(Radio1, BM_GETCHECK, 0, 0) == BST_CHECKED)
+            {
+                SetDCBrushColor(hdc, RGB(0,255,0));
+            }else
+            if(SendMessage(Radio2, BM_GETCHECK, 0, 0) == BST_CHECKED)
+            {
+                SetDCBrushColor(hdc, RGB(0,0,255));
+            }else
+            if(SendMessage(Radio3, BM_GETCHECK, 0, 0) == BST_CHECKED)
+            {
+                SetDCBrushColor(hdc, RGB(255,255,0));
+            }
             Ellipse(hdc, 0, 0, 300, 300);
 
             ++Count;
@@ -48,9 +64,9 @@ LRESULT CALLBACK CustomBtn(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             ReleaseDC(hwnd, hdc);
         }
         break;
+        case WM_MOUSELEAVE:
         case WM_LBUTTONUP:
         {
-            printf("WM_LBUTTONUP\n");
             HDC hdc = GetDC(hwnd);
             SelectObject(hdc, GetStockObject(DC_BRUSH));
             SetDCBrushColor(hdc, RGB(255,0,0));
@@ -66,7 +82,6 @@ LRESULT CALLBACK CustomBtn(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         break;
         case WM_LBUTTONDBLCLK:
         {
-            printf("WM_LBUTTONDBLCLK\n");
             SendMessage(hwnd, WM_LBUTTONDOWN, 0, 0);
         }
         break;
@@ -105,21 +120,22 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
             Radio1 = CreateWindowEx
             (
-                0, L"BUTTON", L"Radio 1",
+                0, L"BUTTON", L"Green",
                 WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
                 10, 50, 80, 20,
                 GroupBox, NULL, hInstance, NULL
             );
+            SendMessage(Radio1, BM_SETCHECK, BST_CHECKED, 0);
             Radio2 = CreateWindowEx
             (
-                0, L"BUTTON", L"Radio 2",
+                0, L"BUTTON", L"Blue",
                 WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
                 10, 80, 80, 20,
                 GroupBox, NULL, hInstance, NULL
             );
-            Radio1 = CreateWindowEx
+            Radio3 = CreateWindowEx
             (
-                0, L"BUTTON", L"Radio 3",
+                0, L"BUTTON", L"Yellow",
                 WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON,
                 10, 110, 80, 20,
                 GroupBox, NULL, hInstance, NULL
