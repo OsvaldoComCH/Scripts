@@ -4,22 +4,40 @@
 
 void Clicker(const int Interval)
 {
+    char Period = 0;
     POINT Cursor;
-    timeBeginPeriod(1);
     printf("\nClicker activated.\nClick with Numpad 0, disable with Numpad 1\n");
 
     while(1)
     {
-        if(GetAsyncKeyState(VK_NUMPAD1) & 0x8000){break;}
+        if(GetAsyncKeyState(VK_NUMPAD1) & 0x8000)
+        {
+            if(Period)
+            {
+                timeEndPeriod(1);
+            }
+            break;
+        }
 
         if(GetAsyncKeyState(VK_NUMPAD0) & 0x8000)
         {
+            if(!Period)
+            {
+                timeBeginPeriod(1);
+                Period = 1;
+            }
             GetCursorPos(&Cursor);
             mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, Cursor.x, Cursor.y, 0, 0);
+        }else
+        {
+            if(Period)
+            {
+                timeEndPeriod(1);
+                Period = 0;
+            }
         }
         Sleep(Interval);
     }
-    timeEndPeriod(1);
 }
 
 int main()
