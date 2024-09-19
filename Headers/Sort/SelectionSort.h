@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SELECTION_SORT
 #define SELECTION_SORT
 

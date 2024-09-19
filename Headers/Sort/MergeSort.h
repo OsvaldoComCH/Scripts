@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MERGE_SORT
 #define MERGE_SORT
 #include <stdlib.h>
