@@ -4,6 +4,7 @@
 
 void Clicker(const int Interval)
 {
+    AlarmClockC Alarm;
     char Period = 0;
     POINT Cursor;
     printf("\nClicker activated.\nClick with Numpad 0, disable with Numpad 1\n");
@@ -20,7 +21,7 @@ void Clicker(const int Interval)
             GetCursorPos(&Cursor);
             mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, Cursor.x, Cursor.y, 0, 0);
         }
-        AlarmClockP(Interval);
+        Alarm(Interval);
     }
 }
 
