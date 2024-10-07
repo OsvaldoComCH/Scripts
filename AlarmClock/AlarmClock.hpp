@@ -10,12 +10,12 @@ class AlarmClockC
     long Error;
 
     public:
-    AlarmClock()
+    AlarmClockC()
     {
         Error = 0;
     }
 
-    void __attribute((fastcall))__ SleepUs(int Microseconds)
+    void __fastcall SleepUs(int Microseconds)
     {
         using namespace std::chrono;
         time_point<high_resolution_clock, microseconds> DueTime =
@@ -35,16 +35,16 @@ class AlarmClockC
         Error = (time_point_cast<microseconds>(high_resolution_clock::now()) - DueTime).count();
     }
 
-    void __attribute((fastcall))__ operator() (int Microseconds)
+    void __fastcall operator() (int Microseconds)
     {
         return SleepUs(Microseconds);
     }
 
-    Reset()
+    void Reset()
     {
         Error = 0;
     }
-}
+};
 
 void AlarmClockP(int Microseconds)
 {
