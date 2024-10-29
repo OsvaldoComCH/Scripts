@@ -1,6 +1,7 @@
 //We program mostly in english, but sometimes in C++
 #include <iostream>
 #include <cstring>
+#include <ctime>
 
 typedef struct 
 {
@@ -20,14 +21,17 @@ int Sum(StructA * A)
     return A->x + A->y;
 }
 
+int RNG()
+{
+    static int Random = time(NULL);
+    Random = Random * 48271 % 2147483647;
+    return Random;
+}
+
 //Get absolute value of integer
 #define absi(i) ((((int) i) ^ ((((int) i) >> 31))) - ((((int) i) >> 31)))
 
-
-int GetValue()
-{
-    return 1;
-}
+int(*GetValue)();
 
 int GetValue1()
 {
@@ -45,24 +49,36 @@ int main()
     A.x = 0x8000ffff;
 
     //High Word
-    std::cout << *((unsigned short *) &A.x + 1) << "\n";
+    std::cout << *((unsigned short *)&A.x + 1) << "\n";
     //Low Word
-    std::cout << *((unsigned short *) &A.x) << "\n";
+    std::cout << *((unsigned short *)&A.x) << "\n";
 
-    float F = 10;
     //Flip sign bit of float
-    *(int *) &F = *((int *) &F) ^ 0x80000000;
+    float F = 10;
+    *(int *)&F = *((int *)&F) ^ 0x80000000;
     std::cout << F << "\n";
 
+    //Convert pointer type of different structs
     StructB B;
     B.a = 10;
     B.b = 5;
     std::strcpy(B.c, "Bom dia");
 
-    //Convert pointer type of different structs
-    std::cout << Sum((StructA *) &B) << "\n";
+    std::cout << Sum((StructA *)&B) << "\n";
 
+    //Create macros for 
     std::cout << absi(-60) << "\n";
-
     std::cout << absi(40) << "\n";
+
+    //Changing function behavior in runtime with function pointers
+    GetValue = GetValue1;
+    std::cout << GetValue() << "\n";
+
+    GetValue = GetValue2;
+    std::cout << GetValue() << "\n";
+
+    //Generating random float (0 <= Random < 1) from random integer generator
+    float Random;
+    *(int *)&Random = (RNG() & 0x007fffff);
+    std::cout << Random << "\n";
 }
