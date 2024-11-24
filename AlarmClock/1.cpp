@@ -4,7 +4,7 @@
 
 void Clicker(const int Interval)
 {
-    AlarmClockC Alarm;
+    AlarmClock Alarm;
     char Period = 0;
     POINT Cursor;
     printf("\nClicker activated.\nClick with Numpad 0, disable with Numpad 1\n");
