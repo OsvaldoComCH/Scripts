@@ -1,13 +1,12 @@
 #ifndef QUICKERSORT_H
 #define QUICKERSORT_H
 
-template<class T>
-void QuickerSort(T * A, int Size)
+void QuickerSort(int * A, int Size)
 {
-    T Pivot;
-    T * x = A;
-    T * y = A + 1;
-    
+    int Pivot;
+    int * x = A;
+    int * y = A + 1;
+
     if(Size <= 65)
     {
         for(; y < &A[Size]; x = y, ++y)
@@ -22,7 +21,7 @@ void QuickerSort(T * A, int Size)
         }
         return;
     }
-    
+
     if(y < &A[Size])
     {
         Pivot = *x;
@@ -31,7 +30,7 @@ void QuickerSort(T * A, int Size)
             if(*y < Pivot)
             {
                 ++x;
-                T Temp = *x;
+                int Temp = *x;
                 *x = *y;
                 *y = Temp;
             }

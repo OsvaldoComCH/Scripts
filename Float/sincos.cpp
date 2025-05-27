@@ -36,7 +36,14 @@ static inline double modulus(double x, double y)
 
 void __declspec(dllexport) __cdecl sincos(double radians, sincos_result * result)
 {
-    double num = modulus(radians, PI + PI);
+    double num;
+    if(radians < PI + PI && radians > 0 - PI - PI)
+    {
+        num = modulus(radians, PI + PI);
+    }else
+    {
+        num = radians;
+    }
     double n = abs(num);
 
     bool sine = 0;
