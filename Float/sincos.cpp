@@ -39,10 +39,10 @@ void __declspec(dllexport) __cdecl sincos(double radians, sincos_result * result
     double num;
     if(radians < PI + PI && radians > 0 - PI - PI)
     {
-        num = modulus(radians, PI + PI);
+        num = radians;
     }else
     {
-        num = radians;
+        num = modulus(radians, PI + PI);
     }
     double n = abs(num);
 
