@@ -37,21 +37,3 @@ cmdkey /generic:LegacyGeneric:target=git:https://github.com /user: /pass:
 
 git config --global user.name ""
 git config --global user.email ""
-
-Set-Location -Path "$env:USERPROFILE\Documents\"
-
-git clone https://github.com/nickyzz1/RecrutamentoInteligenteApi
-
-Set-Location -Path "$env:USERPROFILE\Documents\RecrutamentoInteligenteApi\"
-
-git fetch --prune origin
-git checkout main
-git pull
-
-git clone https://github.com/nickyzz1/RecrutamentoInteligenteFront
-
-Set-Location -Path "$env:USERPROFILE\Documents\RecrutamentoInteligenteFront\"
-
-git fetch --prune origin
-git checkout main
-git pull
